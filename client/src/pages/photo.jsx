@@ -197,7 +197,7 @@ const Photo = () => {
                         dispatch(profilepicupdtae(resuke.url));
                         // toast.success("Photo Updated Successfully", { autoClose: 1300 });
                         toast.update(id, { render: "Photo Updated Successfully", type: "success", isLoading: false , autoClose: 1300 });
-                        navigate('/');
+                        // navigate('/');
                     }
                 } catch (error) {
                     console.log(error);
