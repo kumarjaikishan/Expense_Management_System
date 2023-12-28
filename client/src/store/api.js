@@ -3,6 +3,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 export const userdata = createAsyncThunk("userdata", async () => {
     const token = localStorage.getItem("token");
     // console.log("api calling");
+    // dispatch(setloader(true));
     try {
         const res = await fetch(`http://localhost:5000/userdata`, {
             method: "GET",
@@ -27,8 +28,8 @@ const userexplist = createSlice({
         user: [],
         loading: false,
         error: null,
-        profilepic:"",
-        apiadress:"http://localhost:5000",
+        profilepic: "",
+        apiadress: "http://localhost:5000",
     },
     reducers: {
         userlogout(state, action) {
@@ -39,6 +40,10 @@ const userexplist = createSlice({
         },
         profilepicupdtae(state, action) {
             state.profilepic = action.payload;
+        },
+        profiledetailupdtae(state, action) {
+            state.user.name = action.payload.name;
+            state.user.phone = action.payload.phone;
         }
     },
     extraReducers: (builder) => {
@@ -55,9 +60,9 @@ const userexplist = createSlice({
             state.explist = action.payload.explist;
             state.ledgerlist = action.payload.user.ledger;
             state.user = action.payload.user;
-            state.profilepic=action.payload.user.imgsrc;
+            state.profilepic = action.payload.user.imgsrc;
         })
     }
 })
-export const { userlogout,profilepicupdtae } = userexplist.actions;
+export const { userlogout, profilepicupdtae,profiledetailupdtae } = userexplist.actions;
 export default userexplist.reducer;

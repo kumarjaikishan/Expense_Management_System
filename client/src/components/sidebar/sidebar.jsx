@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom';
 import { useNavigate } from "react-router-dom";
 import swal from 'sweetalert'
 import GrassIcon from '@mui/icons-material/Grass';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { header } from '../../store/login';
 import { useSelector,useDispatch } from 'react-redux';
@@ -15,11 +15,6 @@ const Sidebar = () => {
   const token = localStorage.getItem("token");
     const log = useSelector((state) => state.login);
     const useralldetail = useSelector((state) => state.userexplist);
-    const notify = (msg, dur) => {
-        toast.success(msg, {
-            autoClose: dur,
-        });
-    }
     const linke = [{
         name: "Dashboard",
         link: '/',
@@ -53,7 +48,7 @@ const Sidebar = () => {
         }).then(async (willDelete) => {
             if (willDelete) {
                 dispatch(header("Login"))
-                notify("Logout successfull", 2000)
+                toast("Logout successfull", {autoClose: 1300})
                 navigate('/logout');
             } else {
                 // swal("Your data is safe!");
@@ -62,7 +57,6 @@ const Sidebar = () => {
     }
     return (
         <>
-            <ToastContainer />
             <div className={log.narrow ? "sidebar narrow" : "sidebar"}>
                 <div className="clogo">
                     <NavLink className={(navData) => (navData.isActive ? 'active' : '')} style={{ textDecoration: 'none' }} to='/' > <span className="li" ><span className="logo"> <GrassIcon className='company' /></span><span className="name">Accusoft</span></span></NavLink>

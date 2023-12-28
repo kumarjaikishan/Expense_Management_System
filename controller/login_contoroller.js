@@ -119,7 +119,7 @@ const photo = async (req, res) => {
 
 
 // *--------------------------------------
-// * User Login Logic
+// * User Login 1st method with nodecache Logic
 // *--------------------------------------
 const login = async (req, res) => {
     let usersdata;
@@ -136,9 +136,9 @@ const login = async (req, res) => {
     });
 
     if (!result) {
-        return res.status(400).json({ msg: "Invalid Credentials" });
+        return res.status(400).json({ msg: "Invalid Credientials" });
     }
-    // console.log(await bcrypt.compare(password, result.password));
+    // console.log("password match: ", await bcrypt.compare(password, result.password));
     const generateToken = async (result) => {
         try {
             return jwt.sign({
@@ -177,12 +177,15 @@ const login = async (req, res) => {
 // *--------------------------------------
 // * User Login 2nd method without nodecache Logic
 // *--------------------------------------
-// const login2 = async (req, res) => {
+// const login = async (req, res) => {
 //      const { email, password } = req.body;
+//      console.log(email, password);
 //     try {
 //         const result = await user.findOne({ email });
+//         const result1 = await user.find();
+//         console.log(result1);
 //         if (!result) {
-//             return res.status(400).json({ msg: "Invalid Credentials" });
+//             return res.status(400).json({ msg: "Email not found" });
 //         }
 //         if (await result.checkpassword(password)) {
 //             result.password = undefined;
@@ -259,4 +262,26 @@ const admin = async (req, res) => {
     }
 }
 
-module.exports = { admin, signup, photo, login };
+const updateuserdetail = async (req, res) => {
+    // console.log(req.user);
+    const { name, phone } = req.body;
+    try {
+        const query = await user.findByIdAndUpdate({ _id: req.userid },{ name,phone })
+        if (query) {
+            // console.log(query);
+            return res.status(200).json({
+                msg: "Profile Detail Updated Successfully"
+            })
+        } else {
+            res.status(500).json({
+                msg: "something went wrong"
+            })
+        }
+    } catch (error) {
+        res.status(500).json({
+            msg: error
+        })
+    }
+}
+
+module.exports = { admin, signup, photo, login, updateuserdetail };

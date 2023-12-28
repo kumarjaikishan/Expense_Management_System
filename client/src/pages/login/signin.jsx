@@ -43,7 +43,7 @@ const Signin = () => {
         const { email, password } = signinp;
 
         if (!email || !password) {
-            toast.warn("All fields are Required", 1300);
+            toast.warn("All fields are Required", {autoClose: 1300});
             setbtnclick(false);
             return;
         }
@@ -62,7 +62,7 @@ const Signin = () => {
             if (res.ok) {
                 dispatch(setlogin(true));
                 console.log(data);
-                toast.success("Login Successfully", 1100);
+                toast.success("Login Successfully", {autoClose: 1300});
                 setbtnclick(false);
                 dispatch(setloader(false));
                 localStorage.setItem("token", data.token);
@@ -71,13 +71,13 @@ const Signin = () => {
             }
             else {
                 console.log(data);
-                toast.warn("No user found", 1300);
+                toast.warn("No user found", {autoClose: 1300});
                 setbtnclick(false);
             }
 
         } catch (error) {
             console.log(error);
-            toast.warn("Something Went Wrong", 1300);
+            toast.warn("Something Went Wrong", {autoClose: 1300});
             setbtnclick(false);
             dispatch(setloader(false));
         }

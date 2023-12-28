@@ -32,126 +32,6 @@ const addexpense = async (req, res) => {
     }
 }
 
-
-
-// *--------------------------------------
-// * User Login Logic
-// *--------------------------------------
-const explist = async (req, res) => {
-    const userid = req.body.userid;
-    try {
-        const result = await model.find({ userid }).sort({ date: -1 });
-        if (result) {
-            res.json({
-                msg: "data found",
-                data: result
-            })
-        } else {
-            res.json({
-                msg: "something went wrong in db"
-            })
-        }
-    } catch (error) {
-        res.json({
-            msg: "wrong",
-            data: error
-        })
-    }
-}
-
-// *--------------------------------------
-// * User Login Logic
-// *--------------------------------------
-const ledger = async (req, res) => {
-    const { userid, ledger } = req.body;
-    // console.log(userid,ledger)
-    const result = await model.find({ userid, ledger });
-    // console.log(result)
-    if (result) {
-        res.json({
-            msg: "data found",
-            data: result
-        })
-    } else {
-        res.json({
-            msg: "something went wrong in db"
-        })
-    }
-}
-
-// *--------------------------------------
-// * User Login Logic
-// *--------------------------------------
-const offledger = async (req, res) => {
-    try {
-        const result = await user.find({ email: "test@gmail.com" });
-        if (result) {
-            res.json({
-                msg: "data found",
-                data: result
-            })
-        } else {
-            res.json({
-                msg: "something went wrong in db"
-            })
-        }
-    } catch (error) {
-        res.json({
-            msg: "wrong",
-            data: error
-        })
-    }
-}
-
-// *--------------------------------------
-// * User Login Logic
-// *--------------------------------------
-const offexpfetch = async (req, res) => {
-    try {
-        const result = await office.find();
-        if (result) {
-            res.json({
-                msg: "data found",
-                data: result
-            })
-        } else {
-            res.json({
-                msg: "something went wrong in db"
-            })
-        }
-    } catch (error) {
-        res.json({
-            msg: "wrong",
-            data: error
-        })
-    }
-}
-
-// *--------------------------------------
-// * User Login Logic
-// *--------------------------------------
-const offexpense = async (req, res) => {
-    const { voucher, ledger, date, narration, amount } = req.body;
-    try {
-        const query = new office({ voucher, ledger, date, narration, amount });
-        const result = await query.save();
-        if (result) {
-            res.json({
-                msg: "data inserted successfully"
-            })
-        } else {
-            res.json({
-                msg: "something went wrong in db"
-            })
-        }
-    } catch (error) {
-        res.json({
-            msg: "wrong",
-            data: error
-        })
-    }
-}
-
 // *--------------------------------------
 // * User Login Logic
 // *--------------------------------------
@@ -197,7 +77,7 @@ const userledger = async (req, res) => {
 // *--------------------------------------
 const userdata = async (req, res) => {
     // const bearertoken = req.header('Authorization');
-    // console.log("from finally",req.user);
+    // console.log("from userdata api",req.user);
     try {
         const explist = await model.find({ userid: req.user._id }).sort({ date: -1 });
         if (explist) {
@@ -216,4 +96,4 @@ const userdata = async (req, res) => {
 
 
 
-module.exports = { userdata, userledger, addexpense, datafetcheditexp, explist, offledger, offexpfetch, offexpense };
+module.exports = { userdata, userledger, addexpense, datafetcheditexp};
