@@ -1,13 +1,13 @@
-# Expense Management System
+# EExpense Management System - Efficiently Manage Your Finances
 
 Welcome to the Expense Management System! This system allows users to efficiently manage their
 expenses by providing features such as adding, deleting, updating, and managing expense data. 
-Additionally, it offers comprehensive reporting options for day, month, week, year, and ledger-wise insights.
+Additionally, it offers comprehensive reporting options for  day,week,month,year, and ledger-wise insights
 
 # Live At-
 Running At- https://exp-manager.vercel.app
 
-## Features
+## Key Features
 
 - **Add Expense:** Users can add new expenses with details like category, amount, and date.
 - **Delete Expense:** Remove unwanted expenses from the system.
@@ -22,7 +22,7 @@ Running At- https://exp-manager.vercel.app
 - **Year-wise Reporting:** Review yearly expenditure.
 - **Ledger-wise Reporting:** Detailed ledger-wise reporting for a more granular view.
 
-## Frontend Dependencies
+## Technologies and Dependencies
 
 This project uses the following frontend dependencies:
 
@@ -33,7 +33,6 @@ This project uses the following frontend dependencies:
 - [Vite](https://vitejs.dev/): A fast, opinionated frontend build tool.
 - [SweetAlert](https://sweetalert.js.org/): A beautiful, responsive, customizable, accessible replacement for JavaScript's popup boxes.
 
-## Backend Dependencies
 
 This project uses the following Backend dependencies:
 
