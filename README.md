@@ -1,4 +1,4 @@
-# EExpense Management System - Efficiently Manage Your Finances
+# Expense Management System - Efficiently Manage Your Finances
 
 Welcome to the Expense Management System! This system allows users to efficiently manage their
 expenses by providing features such as adding, deleting, updating, and managing expense data. 
