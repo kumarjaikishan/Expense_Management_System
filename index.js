@@ -19,7 +19,8 @@ app.use(cors());
 app.use(router);
 
 app.get('/', (req, res) => {
-   res.status(200).send("This is From Expense Manager Backend, Created by Jai kishan")
+    app.use(express.static(path.resolve(__dirname, 'client', 'build')))
+    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'))
 })
 
  router.route('/signup').post(login.signup);    //used
