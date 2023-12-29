@@ -28,18 +28,18 @@ const Modalbox = ({ setisledupdate, modal, init, handler, inp, isupdate, sub, se
             })
             const datea = await result.json();
             if (result.ok) {
-                toast.success("Data updated Successfully", {autoClose: 1300})
+                toast.success("Data updated Successfully", { autoClose: 1300 })
                 dispatch(userdata());
                 setinp(init);
                 setisupdate(false);
                 setmodal(false);
                 dispatch(setloader(false));
             } else {
-                toast.warn("error occurred", {autoClose: 1300})
+                toast.warn("error occurred", { autoClose: 1300 })
                 console.log(datea);
             }
         } catch (error) {
-            toast.warn("Sopmething went wrong", {autoClose: 1300})
+            toast.warn("Sopmething went wrong", { autoClose: 1300 })
             console.log(error);
         }
 
@@ -66,8 +66,9 @@ const Modalbox = ({ setisledupdate, modal, init, handler, inp, isupdate, sub, se
                     <span>Ledger :</span>
                     <span>
                         <select className='caps' name="ledger" id="" onChange={handler} value={inp.ledger} >
-                            {useralldetail.user.ledger.map((val, ind) => {
-                                return <option className='erffeg' key={ind} value={val}>{val}</option>
+                        <option value="">Select Ledger</option>
+                            {useralldetail.ledgerlist.map((val, ind) => {
+                                return <option className='erffeg' key={ind} value={val._id}>{val.ledger}</option>
                             })}
                         </select>
                     </span>

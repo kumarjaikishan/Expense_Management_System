@@ -2,21 +2,21 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 export const userdata = createAsyncThunk("userdata", async () => {
     const token = localStorage.getItem("token");
-    // console.log("api calling");
-    // dispatch(setloader(true));
-    try {
-        const res = await fetch(`http://localhost:5000/userdata`, {
-            method: "GET",
-            headers: {
-                "Authorization": `Bearer ${token}`,
-            }
-        })
-        const data = await res.json();
-        // console.log("from redux api", data);
-        return data;
-    } catch (error) {
-        console.log(error);
-    }
+    console.log("api calling");
+        try {
+                const res = await fetch(`/userdata`, {
+                // const res = await fetch(`http://localhost:5000/userdata`, {
+                method: "GET",
+                headers: {
+                    "Authorization": `Bearer ${token}`,
+                }
+            })
+            const data = await res.json();
+            // console.log("from redux api", data);
+            return data;
+        } catch (error) {
+            console.log(error);
+        }
 })
 
 
@@ -29,7 +29,8 @@ const userexplist = createSlice({
         loading: false,
         error: null,
         profilepic: "",
-        apiadress: "http://localhost:5000",
+        apiadress: "",
+        // apiadress: "http://localhost:5000",
     },
     reducers: {
         userlogout(state, action) {
@@ -58,11 +59,11 @@ const userexplist = createSlice({
             state.loading = false;
             // console.log("fulfilled wala", action.payload.msg);
             state.explist = action.payload.explist;
-            state.ledgerlist = action.payload.user.ledger;
+            state.ledgerlist = action.payload.ledger;
             state.user = action.payload.user;
             state.profilepic = action.payload.user.imgsrc;
         })
     }
 })
-export const { userlogout, profilepicupdtae,profiledetailupdtae } = userexplist.actions;
+export const { userlogout, profilepicupdtae, profiledetailupdtae } = userexplist.actions;
 export default userexplist.reducer;

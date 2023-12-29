@@ -16,13 +16,13 @@ const Addexp = () => {
   let navigate = useNavigate();
   const log = useSelector((state) => state.login);
   const useralldetail = useSelector((state) => state.userexplist);
-  const miss = useSelector((state) => state.miss);
   const dispatch = useDispatch();
   useEffect(() => {
     if (!log.islogin) {
-      toast.warn("You Are not Logged In", {autoClose: 1300});
+      toast.warn("You Are not Logged In", 1100);
       return navigate('/login');
     }
+    // console.log("addexp:",useralldetail.explist);
     // setloader(true)
   }, [])
 
@@ -43,8 +43,7 @@ const Addexp = () => {
   const today = date.getFullYear() + "-" + dfbdf + "-" + dfbfvfddf;
 
   const init = {
-    userid: "",
-    ledger: "general",
+    ledger: "",
     date: today,
     amount: "",
     narration: ""
@@ -84,6 +83,7 @@ const Addexp = () => {
   const sub = async () => {
     const token = localStorage.getItem("token");
     let { ledger, date, amount, narration } = inp;
+    // console.log(inp);
     narration = cap(narration);
 
     if (!ledger || !date || !amount || !narration) {
@@ -94,7 +94,7 @@ const Addexp = () => {
       }, 420);
       console.log(dvd)
       dispatch(setloader(false));
-      return toast.warn("Kindly Fill all Fields", {autoClose: 1300})
+      return toast.warn("Kindly Fill all Fields", { autoClose: 1700 })
     }
     try {
       dispatch(setloader(true));
@@ -110,14 +110,14 @@ const Addexp = () => {
       })
       const data = await result.json();
       if (result.ok) {
-        toast.success("Expense Added", {autoClose: 1300});
+        toast.success("Expense Added", { autoClose: 1300 });
         console.log(data);
         dispatch(userdata());
         dispatch(setloader(false));
         setmodal(false);
         setinp(init);
       } else {
-        toast.warn("something went wrong", {autoClose: 1300});
+        toast.warn("something went wrong", { autoClose: 1500 });
       }
 
     } catch (error) {
@@ -186,13 +186,13 @@ const Addexp = () => {
             })
             const data = await result.json();
             if (result.ok) {
-              toast.success("Data Deleted Successfully", {autoClose: 1300});
+              toast.success("Data Deleted Successfully", { autoClose: 1300 });
               dispatch(userdata());
               dispatch(setloader(false));
             }
           } catch (error) {
             console.log(error);
-            toast.error("Something went wrong", {autoClose: 1300});
+            toast.error("Something went wrong", { autoClose: 1600 });
           }
 
         } else {
@@ -224,7 +224,7 @@ const Addexp = () => {
           }
 
           if (arr.length < 1) {
-            return toast.warn("Kindly Select data", {autoClose: 1300});
+            return toast.warn("Kindly Select data", { autoClose: 1700 });
           }
           try {
             const result = await fetch(`${useralldetail.apiadress}/delmany`, {
@@ -239,7 +239,7 @@ const Addexp = () => {
             })
             const data = await result.json();
             if (result.ok) {
-              toast.success("Deleted Successfully", {autoClose: 1300});
+              toast.success("Deleted Successfully", { autoClose: 1300 });
               dispatch(setloader(false));
               dispatch(userdata());
 
@@ -251,7 +251,7 @@ const Addexp = () => {
 
               highlight();
             } else {
-              toast.warn("something went wrong", {autoClose: 1300});
+              toast.warn("something went wrong", { autoClose: 1800 });
             }
 
           } catch (error) {
@@ -438,7 +438,7 @@ const Addexp = () => {
                 return (
                   <tr key={ind}>
                     <td>{firstpostindex + ind + 1}</td>
-                    <td>{val.ledger}</td>
+                    <td>{val.ledger.ledger}</td>
                     <td>{val.amount}</td>
                     <td>{val.narration}</td>
                     <td>{fde}</td>

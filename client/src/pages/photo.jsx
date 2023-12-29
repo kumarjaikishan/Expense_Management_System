@@ -129,7 +129,7 @@ const Photo = () => {
     //                             reset();
     //                             setisuploading(false);
     //                             dispatch(profilepicupdtae(result.url))
-    //                             toast.success("Photo Updated Successfully", {autoClose: 1300});
+    //                             toast.success("Photo Updated Successfully", 1500);
     //                             // navigate('/');
     //                         }
     //                     } catch (error) {
@@ -201,7 +201,7 @@ const Photo = () => {
                     }
                 } catch (error) {
                     console.log(error);
-                    toast.warn("Error Occured", {autoClose: 1300});
+                    toast.warn("Error Occured", 1500);
                 }
             }
         }

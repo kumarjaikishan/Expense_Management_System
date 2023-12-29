@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom';
 import { useNavigate } from "react-router-dom";
 import swal from 'sweetalert'
 import GrassIcon from '@mui/icons-material/Grass';
-import { toast } from 'react-toastify';
+import {toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { header } from '../../store/login';
 import { useSelector,useDispatch } from 'react-redux';
@@ -12,7 +12,6 @@ import { useSelector,useDispatch } from 'react-redux';
 const Sidebar = () => {
     let navigate = useNavigate();
     const dispatch = useDispatch();
-  const token = localStorage.getItem("token");
     const log = useSelector((state) => state.login);
     const useralldetail = useSelector((state) => state.userexplist);
     const linke = [{
@@ -48,7 +47,7 @@ const Sidebar = () => {
         }).then(async (willDelete) => {
             if (willDelete) {
                 dispatch(header("Login"))
-                toast("Logout successfull", {autoClose: 1300})
+                toast.success("Logout successfull", { autoClose: 1300 })
                 navigate('/logout');
             } else {
                 // swal("Your data is safe!");
@@ -62,7 +61,7 @@ const Sidebar = () => {
                     <NavLink className={(navData) => (navData.isActive ? 'active' : '')} style={{ textDecoration: 'none' }} to='/' > <span className="li" ><span className="logo"> <GrassIcon className='company' /></span><span className="name">Accusoft</span></span></NavLink>
                 </div>
                 <div className="link">
-                    {token ? linke.map((val, ind) => {
+                    {log.islogin ? linke.map((val, ind) => {
                         return (
                                 <NavLink key={ind} className={(navData) => (navData.isActive ? 'active' : '')} style={{ textDecoration: 'none' }} to={val.link} >
                                     <span className="li" onClick={() =>  dispatch(header(val.name))}>
@@ -74,7 +73,7 @@ const Sidebar = () => {
                                 </NavLink>
                         )
                     }) : null}
-                    {token ? useralldetail.user.isadmin ?
+                    {log.islogin ? useralldetail.user.isadmin ?
                         <NavLink  className={(navData) => (navData.isActive ? 'active' : '')} style={{ textDecoration: 'none' }} to="/admin" >
                             <span className="li" onClick={() => dispatch(header("Admin"))}>
                                 <span className="logo">
@@ -84,7 +83,7 @@ const Sidebar = () => {
                             </span>
                         </NavLink> : null : null}
 
-                    {token ? <span className="li" onClick={fr}><span className="logo"><i title='Sign Out' className="fa fa-sign-out" aria-hidden="true"></i></span><span className="name">Logout</span></span> : <NavLink className={(navData) => (navData.isActive ? 'active' : '')} style={{ textDecoration: 'none' }} to="/login" > <span className="li" onClick={() => dispatch(header("Login"))}><span className="logo"><i title='Sign In' className="fa fa-user" aria-hidden="true"></i></span><span className="name">Login</span></span></NavLink>}
+                    {log.islogin ? <span className="li" onClick={fr}><span className="logo"><i title='Sign Out' className="fa fa-sign-out" aria-hidden="true"></i></span><span className="name">Logout</span></span> : <NavLink className={(navData) => (navData.isActive ? 'active' : '')} style={{ textDecoration: 'none' }} to="/login" > <span className="li" onClick={() => dispatch(header("Login"))}><span className="logo"><i title='Sign In' className="fa fa-user" aria-hidden="true"></i></span><span className="name">Login</span></span></NavLink>}
 
                 </div>
 

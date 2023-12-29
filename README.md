@@ -1,10 +1,10 @@
-# Expense Management System - Efficiently Manage Your Finances
+# Expense Management System - Efficiently Manage Your Finances(based on M.E.R.N)
 
 Welcome to the Expense Management System! This system allows users to efficiently manage their
 expenses by providing features such as adding, deleting, updating, and managing expense data. 
 Additionally, it offers comprehensive reporting options for  day,week,month,year, and ledger-wise insights.
 
-# Live At-
+# Live
 Running At- https://exp-manager.vercel.app
 
 ## Key Features
