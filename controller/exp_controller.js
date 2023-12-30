@@ -78,8 +78,11 @@ const userledger = async (req, res) => {
 // *--------------------------------------
 const userdata = async (req, res) => {
     try {
+        console.time('userdatatimetaken')
         const explist = await expense.find({ userid: req.user._id }).populate('ledger').sort({date:-1});
+        // const explist = await expense.find({ userid: req.user._id }).sort({date:-1});
         const ledgere = await ledger.find({ userid: req.user._id });
+        console.timeEnd('userdatatimetaken')
         // console.log(ledgere);
         if (explist) {
             res.status(200).json({

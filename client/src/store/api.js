@@ -2,23 +2,23 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 export const userdata = createAsyncThunk("userdata", async () => {
     const token = localStorage.getItem("token");
-    console.log("api calling");
-        try {
-                const res = await fetch(`/userdata`, {
-                // const res = await fetch(`http://localhost:5000/userdata`, {
-                method: "GET",
-                headers: {
-                    "Authorization": `Bearer ${token}`,
-                }
-            })
-            const data = await res.json();
-            // console.log("from redux api", data);
-            return data;
-        } catch (error) {
-            console.log(error);
-        }
+    console.time("userdata time taken");
+    try {
+        const res = await fetch(`/userdata`, {
+        // const res = await fetch(`http://localhost:5000/userdata`, {
+            method: "GET",
+            headers: {
+                "Authorization": `Bearer ${token}`,
+            }
+        })
+        const data = await res.json();
+        console.timeEnd("userdata time taken");
+        // console.log("from redux api", data);
+        return data;
+    } catch (error) {
+        console.log(error);
+    }
 })
-
 
 const userexplist = createSlice({
     name: "user",
