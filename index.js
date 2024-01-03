@@ -43,6 +43,10 @@ router.route('/addledger').post(authmiddlewre, ledger.addledger); //used
 router.route('/updateledger').post(authmiddlewre, ledger.updateledger);    //used     
 router.route('/deleteledger').post(authmiddlewre, ledger.deleteledger); //used
 
+app.use((req, res, next) => {
+    res.status(404).json({ msg: 'Endpoint not found, kindly Re-Check api End point' });
+});
+
 app.listen(port, () => {
     console.log(`server listening at ${port}`);
 })
