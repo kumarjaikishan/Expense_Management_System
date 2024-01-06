@@ -13,6 +13,7 @@ const authmiddlewre = require('./middleware/auth_middleware')
 const adminmiddleware = require('./middleware/admin_middleware')
 const upload = require('./middleware/multer_middleware')
 const emailauth = require('./middleware/email_auth')
+const path = require('path');
 
 app.use(express.json());
 require('./conn/conn')
@@ -21,11 +22,12 @@ app.use(cors());
 app.use(router);
 
 app.get('/', (req, res) => {
-  res.status(200).send("This is From Expense Manager Backend, Created by Jai kishan")
+  app.use(express.static(path.resolve(__dirname, 'client', 'build')))
+  res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'))
 })
 
-router.route('/signup').post(login.signup,emailauth);    //used
-router.route('/login').post(emailauth,login.login);      //used
+router.route('/signup').post(login.signup, emailauth);    //used
+router.route('/login').post(emailauth, login.login);      //used
 router.route('/verify').get(login.verify);      //used
 router.route('/photo').post(authmiddlewre, upload.single('image'), login.photo); //used
 router.route('/updateuserdetail').post(authmiddlewre, login.updateuserdetail); //used
