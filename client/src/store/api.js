@@ -2,16 +2,16 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 export const userdata = createAsyncThunk("userdata", async () => {
     const token = localStorage.getItem("token");
-    console.log("api calling");
+    console.time("time taken by userdata");
         try {
                 const res = await fetch(`/userdata`, {
-                // const res = await fetch(`http://localhost:5000/userdata`, {
                 method: "GET",
                 headers: {
                     "Authorization": `Bearer ${token}`,
                 }
             })
             const data = await res.json();
+             console.timeEnd("time taken by userdata");
             // console.log("from redux api", data);
             return data;
         } catch (error) {
@@ -30,7 +30,6 @@ const userexplist = createSlice({
         error: null,
         profilepic: "",
         apiadress: "",
-        // apiadress: "http://localhost:5000",
     },
     reducers: {
         userlogout(state, action) {

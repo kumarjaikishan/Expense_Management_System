@@ -1,4 +1,3 @@
-const model = require('../modals/exp_schema')
 const user = require('../modals/login_schema')
 const ledmodel = require('../modals/ledger_schema')
 const NodeCache = require("node-cache");
@@ -7,7 +6,6 @@ const bcrypt = require('bcrypt');
 const cloudinary = require('cloudinary').v2;
 const fs = require('fs');
 const jwt = require('jsonwebtoken');
-const { clearScreenDown } = require('readline');
 
 cloudinary.config({
     cloud_name: 'dusxlxlvm',
@@ -162,7 +160,7 @@ const login = async (req, res) => {
         const dfg = await generateToken(result);
         const fbf = result._id.toString();
         result.password = undefined;
-        result.date = undefined;
+        result.createdAt = undefined;
         result._id = undefined;
         result.phone = undefined;
         res.status(200).json({
@@ -211,9 +209,9 @@ const login = async (req, res) => {
 // *--------------------------------------
 // * User SignUp Logic
 // *--------------------------------------
-const signup = async (req, res) => {
+const signup = async (req, res, next) => {
     // console.log(req.body);
-    const { name, email, phone, password, date } = req.body;
+    const { name, email, phone, password } = req.body;
     if (!name || !email || !phone || !password || !date) {
         console.log("all fieldse are req");
         res.json({
@@ -222,9 +220,9 @@ const signup = async (req, res) => {
     }
     try {
         // console.log(fgrd,dsd);
-        const query = new user({ name, email, phone, password, date });
+        const query = new user({ name, email, phone, password });
         const result = await query.save();
-        console.log(result);
+        // console.log(result);
         if (result) {
             // console.log(result);
             myCache.del("allusers");
@@ -232,10 +230,12 @@ const signup = async (req, res) => {
             const ledger2 = new ledmodel({ userid: result._id.toString(), ledger: "other" });
             const save1 = await ledger1.save();
             const save2 = await ledger2.save();
-            res.status(201).json({
-                msg: "SignUp successfully",
-                data: result
-            })
+            // console.log(result._id.toString());
+            next();
+            // res.status(201).json({
+            //     msg: "SignUp successfully",
+            //     data: result
+            // })
         } else {
             res.status(500).json({
                 msg: "something went wrong in db"
@@ -251,25 +251,6 @@ const signup = async (req, res) => {
 }
 
 
-// *--------------------------------------
-// * Admin Logic
-// *--------------------------------------
-const admin = async (req, res) => {
-    // console.log(req.user);
-    if (!req.user.isadmin) {
-        res.status(401).json({ msg: "unautorized Access, Not Admin" })
-    }
-    try {
-        const query = await model.find().sort({ userid: -1 });
-        if (query) {
-            res.status(200).json({
-                explist: query
-            })
-        }
-    } catch (error) {
-        res.status(501).json({ msg: error })
-    }
-}
 
 const updateuserdetail = async (req, res) => {
     // console.log(req.user);
@@ -293,4 +274,22 @@ const updateuserdetail = async (req, res) => {
     }
 }
 
-module.exports = { admin, signup, photo, login, updateuserdetail };
+const verify = async (req, res) => {
+    try {
+        const query = await user.findByIdAndUpdate({ _id: req.query.id }, { isverified: true });
+       
+        if(query){
+            // res.status(201).json({
+            //     msg:`Hi ${query.name},Email verified Successfully,Now You can Proceed to Login`
+            // })
+            res.status(201).send(`<html><h2> Hi ${query.name} , Email Verified Successfully, <button onclick="location.href = 'https://frontend-exp-man.vercel.app';">Login Now</button> </h2></html>`)
+        }
+    } catch (error) {
+        res.status(500).json({
+            msg:"User Email not  verified",
+            error:error
+        })
+    }
+}
+
+module.exports = { signup, photo, login, updateuserdetail, verify };
