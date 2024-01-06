@@ -6,11 +6,7 @@ import {persistReducer} from 'redux-persist';
 import { combineReducers } from "@reduxjs/toolkit";
 
 const persistConfig={
-<<<<<<< HEAD
-    key:"expensee",
-=======
-    key:"expenseee",
->>>>>>> 3bebfda011f288bc1632cf606793084e8ce08397
+    key:"expensreee",
     version:1,
     storage:storage
 }

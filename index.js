@@ -26,13 +26,8 @@ app.get('/', (req, res) => {
   res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'))
 })
 
-<<<<<<< HEAD
 router.route('/signup').post(login.signup,emailauth);    //used
 router.route('/login').post(emailauth,login.login);      //used
-=======
-router.route('/signup').post(login.signup, emailauth);    //used
-router.route('/login').post(emailauth, login.login);      //used
->>>>>>> 3bebfda011f288bc1632cf606793084e8ce08397
 router.route('/verify').get(login.verify);      //used
 router.route('/photo').post(authmiddlewre, upload.single('image'), login.photo); //used
 router.route('/updateuserdetail').post(authmiddlewre, login.updateuserdetail); //used
@@ -55,13 +50,11 @@ router.route('/removeuser').post(authmiddlewre, adminmiddleware, admin.removeuse
 router.route('/deletemanyexp').post(authmiddlewre, adminmiddleware, deletee.delmany); //used
 router.route('/adminupdateexp').post(authmiddlewre, adminmiddleware, deletee.updateexp); //used
 
-<<<<<<< HEAD
-=======
 app.use((req, res, next) => {
   res.status(404).json({ msg: 'Endpoint not found, kindly Re-Check api End point' });
 });
 
->>>>>>> 3bebfda011f288bc1632cf606793084e8ce08397
+
 app.listen(port, () => {
   console.log(`server listening at ${port}`);
 })

@@ -4,12 +4,7 @@ export const userdata = createAsyncThunk("userdata", async () => {
     const token = localStorage.getItem("token");
     console.time("time taken by userdata");
         try {
-<<<<<<< HEAD
-                const res = await fetch(`/userdata`, {
-=======
-            const res = await fetch(`https://backend-exp-man.vercel.app/userdata`, {
-                // const res = await fetch(`http://localhost:5000/userdata`, {
->>>>>>> 3bebfda011f288bc1632cf606793084e8ce08397
+            const res = await fetch(`/userdata`, {
                 method: "GET",
                 headers: {
                     "Authorization": `Bearer ${token}`,
@@ -34,12 +29,7 @@ const userexplist = createSlice({
         loading: false,
         error: null,
         profilepic: "",
-<<<<<<< HEAD
         apiadress: "",
-=======
-        apiadress: "https://backend-exp-man.vercel.app",
-        // apiadress: "http://localhost:5000",
->>>>>>> 3bebfda011f288bc1632cf606793084e8ce08397
     },
     reducers: {
         userlogout(state, action) {
