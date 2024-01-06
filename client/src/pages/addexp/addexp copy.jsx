@@ -4,25 +4,29 @@ import swal from 'sweetalert';
 import Pagination from './pagination';
 import Modalbox from './modalbox';
 import Ledpage from './ledpage';
-import { Navigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { setloader } from '../../store/login';
 import { userdata } from '../../store/api'
 import { toast } from 'react-toastify';
 
 const AddExpenses = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
-  const log = useSelector((state) => state.login);
+  const loginState = useSelector((state) => state.login);
   const userAllDetails = useSelector((state) => state.userexplist);
-  if (!log.islogin) {
-    toast.warn("You are not Logged In",{ autoClose: 1300 })
-    return <Navigate to='/login' />
-  }
-  let itemIds = [];
+
+  useEffect(() => {
+    if (!loginState.islogin) {
+      toast.warn('You Are not Logged In', 1100);
+      return navigate('/login');
+    }
+  }, []);
+
   const currentDate = new Date();
   const [searchInput, setSearchInput] = useState('');
   const [isUpdateMode, setIsUpdateMode] = useState(false);
-  const init = {
+  const init={
     _id: '',
     ledger: '',
     date: `${currentDate.getFullYear()}-${(currentDate.getMonth() + 1).toString().padStart(2, '0')}-${currentDate.getUTCDate().toString().padStart(2, '0')}`,
@@ -47,8 +51,6 @@ const AddExpenses = () => {
     return capitalizedWords.join(' ');
   };
 
-
-  // adding new expense
   const submitExpense = async () => {
     const token = localStorage.getItem('token');
     const { ledger, date, amount, narration } = expenseInput;
@@ -100,8 +102,6 @@ const AddExpenses = () => {
       console.log(error);
     }
   };
- // adding new expense ends here
-
 
   const fetchDataForEdit = async (expense) => {
     setExpenseInput({
@@ -116,26 +116,6 @@ const AddExpenses = () => {
   };
 
   const deleteExpense = async (expenseId) => {
-    itemIds = []
-    itemIds.push(expenseId);
-    // console.log(itemIds);
-    sendDeleteRequest(itemIds);
-  };
-  
-  const deletemanyExpense = async () => {
-    itemIds = []
-    const selectedItems = document.querySelectorAll('#tablecontent input:checked');
-    selectedItems.forEach((item) => {
-      itemIds.push(item.id);
-    });
-    // console.log(itemIds);
-    sendDeleteRequest(itemIds);
-  };
-
-  const sendDeleteRequest = async (itemIds) => {
-    if (itemIds.length < 1) {
-      return toast.warn('Kindly Select Atlest 1 Entry', { autoClose: 1700 });
-    }
     const token = localStorage.getItem('token');
     swal({
       title: 'Are you sure?',
@@ -147,8 +127,56 @@ const AddExpenses = () => {
       if (willDelete) {
         dispatch(setloader(true));
         try {
-          const result = await fetch(`${userAllDetails.apiadress}/delmany`, {
+          const result = await fetch(`${userAllDetails.apiadress}/deleteoneexp`, {
             method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify({
+              id: expenseId,
+            }),
+          });
+
+          const data = await result.json();
+
+          if (result.ok) {
+            toast.success('Data Deleted Successfully', { autoClose: 1300 });
+            dispatch(userdata());
+            dispatch(setloader(false));
+          }
+        } catch (error) {
+          console.log(error);
+          toast.error('Something went wrong', { autoClose: 1600 });
+        }
+      }
+    });
+  };
+
+  const sendDeleteRequest = async () => {
+    const token = localStorage.getItem('token');
+    const selectedItems = document.querySelectorAll('#tablecontent input:checked');
+    swal({
+      title: 'Are you sure?',
+      text: 'Once deleted, you will not be able to recover this Data!',
+      icon: 'warning',
+      buttons: true,
+      dangerMode: true,
+    }).then(async (willDelete) => {
+      if (willDelete) {
+        dispatch(setloader(true));
+        const itemIds = [];
+        selectedItems.forEach((item) => {
+          itemIds.push(item.id);
+        });
+
+        if (itemIds.length < 1) {
+          return toast.warn('Kindly Select data', { autoClose: 1700 });
+        }
+
+        try {
+          const result = await fetch(`${userAllDetails.apiadress}/delmany`, {
+            method: 'DELETE',
             headers: {
               'Content-Type': 'application/json',
               Authorization: `Bearer ${token}`,
@@ -216,7 +244,6 @@ const AddExpenses = () => {
   const handleSearch = (e) => {
     setSearchInput(e.target.value);
   };
-
 
   const highlight = () => {
     const checkboxes = document.querySelectorAll('#tablecontent input');
@@ -340,8 +367,9 @@ const AddExpenses = () => {
                 })
                 .map((expense, index) => {
                   const expenseDate = new Date(expense.date);
-                  const formattedDate = `${expenseDate.getUTCDate().toString().padStart(2, '0')} ${expenseDate.toLocaleString('default', { month: 'short' })
-                    }, ${expenseDate.getFullYear().toString().substr(-2)}`;
+                  const formattedDate = `${expenseDate.getUTCDate().toString().padStart(2, '0')} ${
+                    expenseDate.toLocaleString('default', { month: 'short' })
+                  }, ${expenseDate.getFullYear().toString().substr(-2)}`;
 
                   return (
                     <tr key={index}>
@@ -380,7 +408,7 @@ const AddExpenses = () => {
                 </th>
                 <th colSpan="2"></th>
                 <th colSpan="1" id="alldelete" title="Delete Selected Item">
-                  <i onClick={deletemanyExpense} className="fa fa-trash" aria-hidden="true"></i>
+                  <i onClick={sendDeleteRequest} className="fa fa-trash" aria-hidden="true"></i>
                 </th>
                 <th colSpan="1"></th>
               </tr>

@@ -1,68 +1,55 @@
-.exp {
+.admin {
     /* border: 1px solid red; */
     width: 100%;
     height: 100%;
     overflow: auto;
     position: relative;
     padding: 0 2rem;
-}
 
-.exp .add {
-    position: relative;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 60px;
-    /* border: 1px solid red; */
-    display: flex;
-    align-items: center;
-    justify-content: end;
-    margin-top: 10px;
-    margin-bottom: 5px;
-}
+    & .head {
+        border-top-left-radius: 11px;
+        border-top-right-radius: 11px;
+        position: relative;
+        /* border: 1px solid red; */
+        margin-top: 10px;
+        width: 100%;
+        height: 60px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-image: linear-gradient(179.4deg, rgba(33, 150, 243, 1) 1.8%, rgba(22, 255, 245, 0.60) 97.1%);
+   
+        & span {
+            /* border: 1px solid red; */
+            color: rgb(39, 34, 34);
+            display: inline-block;
+            padding: 5px;
+            font-weight: 700;
+        }
+    }
 
-.exp .add i {
-    display: inline-block;
-    /* border: 1px solid red; */
-    width: 50px;
-    height: 50px;
-    cursor: pointer;
-    font-size: 2.6em;
-    transition: 0.1s;
-    text-align: center;
-    line-height: 50px;
-    background: #0984e3;
-    border-radius: 11px;
-    color: white;
-}
+    .table {
+        width: 100%;
+        position: relative;
+        /* border: 1px solid red; */
 
-.exp .add i:hover {
-    transform: scale(1.03);
-}
+        & table {
+            width: 100%;
+            border-collapse: collapse;
 
-.exp .head {
-    border-top-left-radius: 11px;
-    border-top-right-radius: 11px;
-    position: relative;
-    /* border: 1px solid red; */
-    width: 100%;
-    height: 60px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-image: linear-gradient(179.4deg, rgba(33, 150, 243, 1) 1.8%, rgba(22, 255, 245, 0.60) 97.1%);
+            & td,th{
+                border: 1px solid rgb(190, 185, 185);
+                text-align: center;
+                cursor: pointer;
+            }
+        }
+        
+    }
 }
+ 
 
-.exp .head span {
-    /* border: 1px solid red; */
-    color: rgb(39, 34, 34);
-    display: inline-block;
-    padding: 5px;
-    font-weight: 700;
-}
-
-.exp .head span:nth-child(2) select,
-.exp .head span:nth-child(3) input {
+.admin .head span:nth-child(2) select,
+.admin .head span:nth-child(3) input {
     width: 110px;
     outline: none;
     border: none;
@@ -71,45 +58,23 @@
     text-align: center;
 }
 
-.exp .head span:nth-child(3) input {
+.admin .head span:nth-child(3) input {
     width: 210px;
 }
+ 
 
-.exp .mater td {
-    text-transform: capitalize;
-}
-
-.exp .table {
-    width: 100%;
-    position: relative;
-    /* border: 1px solid red; */
-}
-
-.exp .table table {
-    width: 100%;
-    border-collapse: collapse;
-}
-
-
-.exp .table table th,
-.exp .table table td {
-    border: 1px solid rgb(190, 185, 185);
-    text-align: center;
-    cursor: pointer;
-}
-
-.exp .table table thead th,
-.exp .table table #foot th {
+.admin .table table thead th,
+.admin .table table #foot th {
     height: 30px;
     padding: 0 2px;
     /* color: #0984e3; */
 }
 
-.exp thead th i {
+.admin thead th i {
     float: right;
 }
 
-.exp .table thead i {
+.admin .table thead i {
     /* background-color: red; */
     display: inline-block;
     width: 20px;
@@ -120,96 +85,92 @@
     /* font-weight: 100; */
 }
 
-.exp .table thead th.active {
+.admin .table thead th.active {
     color: rgb(54, 19, 250);
 }
 
-.exp .table table thead,
-.exp .table table #foot {
+.admin .table table thead,
+.admin .table table #foot {
     position: sticky;
     background: #0984e3;
     color: whitesmoke;
     box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.3);
 }
 
-.exp .table table #foot {
+.admin .table table #foot {
     bottom: 5px;
 }
 
-.exp .table table thead {
+.admin .table table thead {
     top: 0;
 }
 
-.exp .table table th:nth-child(1),
-.exp .table table th:nth-child(5),
-.exp .table table th:nth-child(6),
-.exp .table table th:nth-child(7) {
-    width: 50px;
+.admin .table table th:nth-child(1),
+.admin .table table th:nth-child(8)
+ {
+    width: 40px !important;
 }
 
-.exp .table table th:nth-child(6) {
-    width: 40px;
+.admin .table table th:nth-child(6),
+.admin .table table th:nth-child(7)
+ {
+    width: 90px !important;
 }
 
-.exp .table table th:nth-child(3),
-.exp .table table th:nth-child(5) {
-    width: 90px;
+.admin .table table th:nth-child(2) {
+    width: 110px;
 }
 
-.exp .table table th:nth-child(2) {
-    width: 150px;
-}
-
-.exp tr td:nth-child(6) {
+.admin tr td:nth-child(7) {
     padding: 0px 1px;
     display: flex;
     justify-content: space-evenly;
     align-items: center;
-    height: 100%;
+    /* height: 100%; */
 }
 
-.exp .table table td {
+.admin .table table td {
     font-size: 0.9em;
     height: 25px;
     line-height: 25px;
 }
 
-.exp tr .fa {
+.admin tr .fa {
     font-size: 1.2em;
     transition: 0.1s;
     width: max-content;
 }
 
-.exp .fa-eye {
+.admin .fa-eye {
     color: #95afc0;
 }
 
-.exp .fa-pencil-square-o {
+.admin .fa-pencil-square-o {
     color: #22a6b3;
 }
 
-.exp table .fa-trash-o,
-.exp table .fa-trash {
+.admin table .fa-trash-o,
+.admin table .fa-trash {
     color: #eb4d4b;
 }
 
-.exp table .fa-trash {
+.admin table .fa-trash {
     font-size: 1.5em;
     transform: rotate(20deg);
     transition: 0.1s;
     color: white;
 }
 
-.exp table .fa-trash:hover {
+.admin table .fa-trash:hover {
     font-size: 1.6em;
     color: #13adfa;
 }
 
-.exp tr .fa:hover {
+.admin tr .fa:hover {
     transform: scale(1.2);
 }
 
-.exp .foot {
+.admin .foot {
     margin-top: 10px;
     border-radius: 5px;
     width: 100%;
@@ -224,7 +185,7 @@
     box-shadow: 0 0 5px #fff, 5px 5px 10px #a7aaaf, -5px -5px 10px #fff;
 }
 
-.exp .foot .pages {
+.admin .foot .pages {
     display: inline-block;
     margin: 0 5px;
     width: 35px;
@@ -240,13 +201,13 @@
     box-shadow: 3px 3px 8px rgb(0 0 0 / 40%);
 }
 
-.exp .foot .pages:hover,
-.exp .foot .pages.active {
+.admin .foot .pages:hover,
+.admin .foot .pages.active {
     background: grey;
     color: white;
 }
 
-.exp .foot i {
+.admin .foot i {
     background: none;
     border: none;
     outline: none;
@@ -264,86 +225,86 @@
     transition: 0.1s;
 }
 
-.exp .foot i:hover {
+.admin .foot i:hover {
     transform: scale(1.1);
     background: #13adfa;
 }
 
-.exp tr td:nth-child(2) {
+.admin tr td:nth-child(2) {
     text-transform: capitalize;
 }
 
 @media only screen and (max-width: 600px) {
-    .exp {
+    .admin {
         padding: 0 15px;
         padding-bottom: 30px;
     }
 
-    .exp .add {
+    .admin .add {
         height: 40px;
     }
 
-    .exp .add i {
+    .admin .add i {
         width: 40px;
         height: 40px;
         font-size: 2.1em;
         line-height: 42px;
     }
 
-    .exp .head {
+    .admin .head {
         width: 100%;
         height: 55px;
         font-size: 14px;
     }
 
-    .exp .head span:nth-child(1) {
+    .admin .head span:nth-child(1) {
         display: none;
     }
 
-    .exp .head span:nth-child(2) select,
-    .exp .head span:nth-child(3) input {
+    .admin .head span:nth-child(2) select,
+    .admin .head span:nth-child(3) input {
         width: 110px;
         height: 30px;
     }
 
-    .exp .head span:nth-child(3) input {
+    .admin .head span:nth-child(3) input {
         width: 170px;
     }
 
-    .exp .table th {
+    .admin .table th {
         font-size: 12px;
     }
 
-    .exp .table #tablecontent {
+    .admin .table #tablecontent {
         font-size: 0.6em;
     }
 
 
-    .exp .table table th:nth-child(1),
-    .exp .table table th:nth-child(5),
-    .exp .table table th:nth-child(6),
-    .exp .table table th:nth-child(7) {
+    .admin .table table th:nth-child(1),
+    .admin .table table th:nth-child(5),
+    .admin .table table th:nth-child(6),
+    .admin .table table th:nth-child(7) {
         width: 50px;
     }
 
-    .exp .table table th:nth-child(6) {
+    .admin .table table th:nth-child(6) {
         width: 40px;
     }
 
-    .exp .table table th:nth-child(3),
-    .exp .table table th:nth-child(5) {
+    .admin .table table th:nth-child(3),
+    .admin .table table th:nth-child(5) {
         width: 90px;
     }
 
-    .exp .table table th:nth-child(2) {
+    .admin .table table th:nth-child(2) {
         width: 150px;
     }
 
-    .exp .table table th:nth-child(4) {
+    .admin .table table th:nth-child(4) {
         width: 160px;
     }
 
-    .exp .foot {
+    .admin .foot {
         height: 60px;
         padding: 0px 5px;
         display: flex;
@@ -352,13 +313,13 @@
         align-items: center;
     }
 
-    .exp .foot .pages {
+    .admin .foot .pages {
         margin: 0 2px;
         width: 20px;
         height: 18px;
         line-height: 17px;
     }
-    .exp .foot i , .exp .foot .pages.active{
+    .admin .foot i , .admin .foot .pages.active{
         font-size: 0.9em;
         height: 20px;
         width: 20px;
@@ -367,7 +328,7 @@
         padding: 0 4px;
     }
  
-    .exp .foot span:nth-child(1){
+    .admin .foot span:nth-child(1){
         width: 40%;
         text-align: center;
     }
