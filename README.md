@@ -52,4 +52,4 @@ This project uses the following Backend dependencies:
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/kumarjaikishan/MODERN-expense.git
+   git clone https://github.com/kumarjaikishan/Expense_Management_System.git
