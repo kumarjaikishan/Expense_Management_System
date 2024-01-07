@@ -130,6 +130,11 @@ const login = async (req, res) => {
         myCache.set("allusers", JSON.stringify(usersdata));
     }
     const { email, password } = req.body;
+    if(!email || !password){
+        return res.status(422).json({
+            msg: "Input Required"
+        })
+    }
 
     const result = await usersdata.find((hel) => {
         return hel.email == req.body.email
@@ -212,39 +217,26 @@ const login = async (req, res) => {
 const signup = async (req, res, next) => {
     // console.log(req.body);
     const { name, email, phone, password } = req.body;
-    if (!name || !email || !phone || !password || !date) {
+    if (!name || !email || !phone || !password ) {
         console.log("all fieldse are req");
         res.json({
             msg: "all fields are required"
         })
     }
     try {
-        // console.log(fgrd,dsd);
         const query = new user({ name, email, phone, password });
         const result = await query.save();
-        // console.log(result);
         if (result) {
-            // console.log(result);
             myCache.del("allusers");
             const ledger1 = new ledmodel({ userid: result._id.toString(), ledger: "general" });
             const ledger2 = new ledmodel({ userid: result._id.toString(), ledger: "other" });
             const save1 = await ledger1.save();
             const save2 = await ledger2.save();
-            // console.log(result._id.toString());
             next();
-            // res.status(201).json({
-            //     msg: "SignUp successfully",
-            //     data: result
-            // })
-        } else {
-            res.status(500).json({
-                msg: "something went wrong in db"
-            })
         }
     } catch (error) {
-        console.log(error);
         res.status(500).json({
-            msg: error
+            msg: error.message
         })
     }
 
@@ -255,6 +247,12 @@ const signup = async (req, res, next) => {
 const updateuserdetail = async (req, res) => {
     // console.log(req.user);
     const { name, phone } = req.body;
+    if (!name || !phone) {
+        console.log("all fieldse are req");
+        res.json({
+            msg: "all fields are required"
+        })
+    }
     try {
         const query = await user.findByIdAndUpdate({ _id: req.userid }, { name, phone })
         if (query) {
@@ -262,11 +260,7 @@ const updateuserdetail = async (req, res) => {
             return res.status(200).json({
                 msg: "Profile Detail Updated Successfully"
             })
-        } else {
-            res.status(500).json({
-                msg: "something went wrong"
-            })
-        }
+        } 
     } catch (error) {
         res.status(500).json({
             msg: error
@@ -278,12 +272,12 @@ const verify = async (req, res) => {
     try {
         const query = await user.findByIdAndUpdate({ _id: req.query.id }, { isverified: true });
        
-        if(query){
-            // res.status(201).json({
-            //     msg:`Hi ${query.name},Email verified Successfully,Now You can Proceed to Login`
-            // })
-            res.status(201).send(`<html><h2> Hi ${query.name} , Email Verified Successfully, <button onclick="location.href = 'https://frontend-exp-man.vercel.app';">Login Now</button> </h2></html>`)
+        if(!query){
+            res.status(400).json({
+                msg:"UserId is not Valid"
+            })
         }
+        res.status(201).send(`<html><h2> Hi ${query.name} , Email Verified Successfully, <button onclick="location.href = 'https://frontend-exp-man.vercel.app';">Login Now</button> </h2></html>`)
     } catch (error) {
         res.status(500).json({
             msg:"User Email not  verified",
