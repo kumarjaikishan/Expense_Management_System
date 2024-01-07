@@ -156,20 +156,21 @@
 
 @media only screen and (max-width:1200px) {
     .datanalysis {
-        padding-bottom: 90px;
+        display: grid;
         grid-template-columns: repeat(3, 1fr);
     }
 }
 
 @media only screen and (max-width:960px) {
     .datanalysis {
-        padding-bottom: 90px;
+        display: grid;
         grid-template-columns: repeat(2, 1fr);
     }
 }
 
 @media only screen and (max-width:600px) {
     .datanalysis {
+        /* border: 5px solid red; */
         padding-bottom: 90px;
         grid-template-columns: repeat(1, 1fr);
     }

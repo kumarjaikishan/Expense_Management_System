@@ -6,28 +6,26 @@ import Sidebar from './components/sidebar/sidebar';
 import Home from './pages/home2';
 import Addexp from './pages/addexp/addexp';
 import Datanalysis from './pages/dataanalysis';
-import { useEffect } from 'react';
+import { useState,useEffect} from 'react';
 import Login from './pages/login/login';
 import Logout from './pages/logout';
 import Report from './pages/Report';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Photo from './pages/photo';
+import Admin from './pages/Admin';
 import { useSelector, useDispatch } from 'react-redux';
 import { setnarrow } from '../src/store/login';
 import Officeexp from './pages/officeexp';
 import Test from './pages/test';
 import { userdata } from './store/api'
-import { Errorpage } from './pages/Errorpage';
-import Allexpense from './pages/admin/Allexpenses';
-import Alluser from './pages/admin/alluser';
 
 function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
     const token = localStorage.getItem("token");
-    token && dispatch(userdata());
+    token &&  dispatch(userdata());
   }, [])
 
   const log = useSelector((state) => state.login);
@@ -54,13 +52,10 @@ function App() {
             <Route path="/photo" element={<Photo />} />
             <Route path="/login" element={<Login />} />
             <Route path="/logout" element={<Logout />} />
-            <Route path="/admin"  >
-              <Route path="users" element={<Alluser />} />
-              <Route path="expense" element={<Allexpense />} />
-            </Route>
+            <Route path="/admin" element={<Admin />} />
             <Route path="/print" element={<Officeexp />} />
             <Route path="/test" element={<Test />} />
-            <Route path="*" element={<Errorpage />} />
+            {/* <Route path="/test" element={<Test />} /> */}
           </Routes>
           <div style={{ display: log.loader ? "flex" : "none" }} className="loader"><img src={loadere} alt="" /></div>
         </div>

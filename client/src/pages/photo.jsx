@@ -1,22 +1,23 @@
 import React, { useEffect, useState } from 'react'
-import { Navigate } from "react-router-dom";
+import { json, useNavigate } from "react-router-dom";
 import './photo.css';
 import { useSelector, useDispatch } from 'react-redux';
 import { header } from '../store/login';
-import { profilepicupdtae, profiledetailupdtae } from '../store/api';
-
+import { profilepicupdtae,profiledetailupdtae } from '../store/api';
+import { toast } from 'react-toastify';
 
 const Photo = () => {
+    let navigate = useNavigate();
     const dispatch = useDispatch();
     const log = useSelector((state) => state.login);
-    if (!log.islogin) {
-        toast.warn("You are not Logged In",{ autoClose: 1300 })
-        return <Navigate to='/login' />
-    }
     const useralldetail = useSelector((state) => state.userexplist);
     const defaultprofile = "https://res.cloudinary.com/dusxlxlvm/image/upload/v1699090690/just_yoljye.png"
     useEffect(() => {
+        if (!log.islogin) {
+            return navigate('/login');
+        }
         dispatch(header("Profile Update"))
+        // setloader(true);
     }, [])
     const WIDTH = 200;
     const [isfile, setisfile] = useState(false);
@@ -129,7 +130,7 @@ const Photo = () => {
     //                             setisuploading(false);
     //                             dispatch(profilepicupdtae(result.url))
     //                             toast.success("Photo Updated Successfully", 1500);
-    //                             // <Navigate to='/' />
+    //                             // navigate('/');
     //                         }
     //                     } catch (error) {
     //                         console.log(error)
@@ -196,7 +197,7 @@ const Photo = () => {
                         dispatch(profilepicupdtae(resuke.url))
                         // toast.success("Photo Updated Successfully", { autoClose: 1300 });
                         toast.update(id, { render: "Photo Updated Successfully", type: "success", isLoading: false, autoClose: 1300 });
-                        // <Navigate to='/' />
+                        // navigate('/');
                     }
                 } catch (error) {
                     console.log(error);
@@ -279,10 +280,10 @@ const Photo = () => {
                 console.log(result);
                 seteditable(!editable);
                 dispatch(profiledetailupdtae(input))
-                toast.success("Updated Successfull", { autoClose: 1300 });
+                toast.success("Updated Successfull", {autoClose: 1300});
             }
         } catch (error) {
-            toast.warn("Something went wrong", { autoClose: 1500 });
+            toast.warn("Something went wrong", {autoClose: 1500});
             console.log(error);
         }
     }
@@ -312,15 +313,15 @@ const Photo = () => {
                         <div className="profile-bio">
                             <div>
                                 <label htmlFor="name"> <h3 >Name</h3></label>
-                                :<input style={{ outline: editable && "none" }} readOnly={editable} id='name' type="text" onChange={handle} name="name" defaultValue={input.name} />
+                                :<input style={{outline: editable && "none"}} readOnly={editable} id='name' type="text" onChange={handle} name="name" defaultValue={input.name} />
                             </div>
                             <div>
                                 <label htmlFor="phone"> <h3 >Phone</h3></label>
-                                :<input style={{ outline: editable && "none" }} readOnly={editable} id='phone' type="tel" onChange={handle} name="phone" defaultValue={input.phone} />
+                                :<input style={{outline: editable && "none"}} readOnly={editable} id='phone' type="tel" onChange={handle} name="phone" defaultValue={input.phone} />
                             </div>
                             <div>
                                 <label htmlFor="email"> <h3 >Email</h3></label>
-                                :<input style={{ outline: "none" }} title={editable && "Email Can't be Updated"} readOnly={true} id='email' type="text" onChange={handle} name="email" defaultValue={input.email} />
+                                :<input style={{outline:"none"}} title={editable && "Email Can't be Updated"} readOnly={true} id='email' type="text" onChange={handle} name="email" defaultValue={input.email} />
                             </div>
                             {!editable && <div>  <button onClick={updatedetails}>Update Deatils</button> </div>}
                             <i className="fa fa-pencil" title='Edit Details' aria-hidden="true" onClick={() => seteditable(!editable)}></i>

@@ -5,13 +5,8 @@ import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux';
 import { header, setloader } from '../store/login';
 import {  toast } from 'react-toastify';
-import { userdata } from '../store/api'
 
 const calculateLedgerSum = (data) => {
-  const log = useSelector((state) => state.login);
-  if (!log.islogin) {
-    return navigate('/login');
-  }
   // console.time('chatgpt home')
   let totalSum = 0;
   let todaySum = 0;
@@ -69,18 +64,18 @@ const calculateLedgerSum = (data) => {
 };
 
 const Home = () => {
+  let navigate = useNavigate();
   const dispatch = useDispatch();
- 
+  const log = useSelector((state) => state.login);
   const useralldetail = useSelector((state) => state.userexplist);
   useEffect(() => {
-    // repeat(1000000);
-    dispatch(header("Dashboard"))
-    dispatch(setloader(true));
-    const fvf= async()=>{
-      await dispatch(userdata());
-      dispatch(setloader(false));
+    if (!log.islogin) {
+      // toast.warn("You Are not Logged In", { autoClose: 1300 });
+      return navigate('/login');
     }
-    fvf();
+    // repeat(1000000);
+    dispatch(setloader(false));
+    dispatch(header("Dashboard"))
   }, [])
 
   const { totalSum, todaySum, yesterdaySum, lastWeekSum, lastMonthSum, lastYearSum } = calculateLedgerSum(useralldetail.explist);

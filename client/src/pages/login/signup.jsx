@@ -6,13 +6,11 @@ import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import Person4Icon from '@mui/icons-material/Person4';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import VpnKeyIcon from '@mui/icons-material/VpnKey';
-import { setloader, setlogin } from '../../store/login';
 import { useSelector, useDispatch } from 'react-redux';
 import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
 import { toast } from 'react-toastify';
 
 const Signup = ({setlog}) => {
-    const dispatch = useDispatch();
     const useralldetail = useSelector((state) => state.userexplist);
     const init = {
         name: "",
@@ -35,8 +33,9 @@ const Signup = ({setlog}) => {
 
     const submit = async (event) => {
         // console.log(signinp);
-        // setbtnclick(true);
-       
+        setbtnclick(true);
+        const today = new Date;
+        const date = today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getUTCDate();
         const { name, email, phone, password, cpassword } = signinp;
         if (!name || !email || !phone || !password ) {
             toast.warn("All Fields are Required", { autoClose: 1300 })
@@ -55,33 +54,29 @@ const Signup = ({setlog}) => {
         }
 
         try {
-            dispatch(setloader(true));
             const res = await fetch(`${useralldetail.apiadress}/signup`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify({
-                    name, email, phone, password
+                    name, email, phone, password, date
                 })
             })
             const datae = await res.json();
             console.log(datae);
             if (res.ok) {
                 // setsigninp(init);
-                toast.success("Signup Successful,verify your Email", { autoClose: 3300 })
+                toast.success("Signup Successful", { autoClose: 1300 })
                 setbtnclick(false);
-                setlog(true)
-                dispatch(setloader(false));
+                // setlog(true)
             } else {
-                dispatch(setloader(false));
                 setbtnclick(false);
                 toast.warn("else wala went wrong", { autoClose: 1300 })
             }
 
             // console.log(datae);
         } catch (error) {
-            dispatch(setloader(false));
             setbtnclick(false);
             toast.warn("Something went wrong catch", { autoClose: 1600 })
             console.log(error);
@@ -125,7 +120,6 @@ const Signup = ({setlog}) => {
                     className='filled'
                     onChange={signhandle}
                     name="phone"
-                    type='tel'
                     onKeyPress={(event) => { if (!/[0-9]/.test(event.key)) { event.preventDefault(); } }}
                     value={signinp.phone}
                     InputProps={{

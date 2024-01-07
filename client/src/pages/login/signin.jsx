@@ -37,7 +37,7 @@ const Signin = () => {
     }
 
     const submit = async () => {
-        // setbtnclick(true);
+        setbtnclick(true);
         const { email, password } = signinp;
 
         if (!email || !password) {
@@ -56,31 +56,27 @@ const Signin = () => {
                     email, password
                 })
             })
-            // console.log(res);
             const data = await res.json();
-            if (res.ok && res.status == 200) {
+            if (res.ok) {
                 dispatch(setlogin(true));
                 // console.log(data);
                 toast.success("Login Successfully", { autoClose: 1300 });
-                // setbtnclick(false);
-                dispatch(setloader(true));
+                setbtnclick(false);
+                dispatch(setloader(false));
                 localStorage.setItem("token", data.token);
                 dispatch(userdata());
                 return navigate('/');
-               
-            } else if (res.ok && res.status == 201) {
-                dispatch(setloader(false));
-                toast.warn("Kindly Verify Email First", { autoClose: 3300 });
-            } else {
+            }
+            else {
                 console.log(data);
-                toast.warn("No user found", { autoClose: 1500 });
+                toast.warn("No user found",{autoClose: 1500});
                 setbtnclick(false);
                 dispatch(setloader(false));
             }
 
         } catch (error) {
             console.log(error);
-            toast.warn("Something Went Wrong", { autoClose: 1500 });
+            toast.warn("Something Went Wrong",{ autoClose: 1500 });
             setbtnclick(false);
             dispatch(setloader(false));
         }
@@ -89,6 +85,7 @@ const Signin = () => {
 
     return (
         <>
+
             <div className="logine" id='forme'>
                 <TextField
                     label="Email*"
