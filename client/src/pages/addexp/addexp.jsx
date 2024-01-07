@@ -415,7 +415,7 @@ const AddExpenses = () => {
           inp={expenseInput}
           isupdate={isUpdateMode}
         />
-        <Ledpage setmodal={setIsModalOpen} setisledupdate={setIsLedgerUpdate} isledupdate={isLedgerUpdate} />
+        <Ledpage setmodal={setIsModalOpen}  setdisable={setdisable} disable={disable} setisledupdate={setIsLedgerUpdate} isledupdate={isLedgerUpdate} />
       </div>
     </>
   );
